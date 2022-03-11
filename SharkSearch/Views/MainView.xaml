@@ -1,12 +1,12 @@
-﻿<Window x:Class="SharkSearch.MainWindow"
+﻿<Window x:Class="SharkSearch.Views.MainView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SharkSearch"
+        xmlns:local="clr-namespace:SharkSearch.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Background="Beige">
+        Title="MainView" Height="450" Width="800" WindowState="Maximized" Background="#FF5555">
     <Grid>
-        <TextBlock Text="Ass Jack hahahah" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="40" Foreground="White" Background="Blue"/>
+        
     </Grid>
 </Window>
