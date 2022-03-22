@@ -24,23 +24,27 @@ namespace SharkSearch.ViewModels {
             APIHelper.InitializeClient();
         }
         public async void Loaded() {
-            await FetchStock("F");
+            await FetchStock("TSLA");
         }
 
         public async Task FetchStock(string StockSymbol) {
             StockModel Stock = await StockFetcher.FetchStock(StockSymbol);
-            Console.WriteLine($"Symbol: {Stock.symbol}");
-            Console.WriteLine($"Name: {Stock.longName}");
-            Console.WriteLine($"Maket Cap: {Stock.marketCap} - {Stock.currency}");
-            ResultData = $"Symbol: {Stock.symbol}";
-            ResultData += $"\nName: {Stock.longName}";
-            ResultData += $"\nMaket Cap: {Stock.marketCap} - {Stock.currency}";
+            if(Stock != null) {
+                Console.WriteLine($"Symbol: {Stock.symbol}");
+                Console.WriteLine($"Name: {Stock.longName}");
+                Console.WriteLine($"Maket Cap: {Stock.marketCap} - {Stock.currency}");
+                ResultData = $"Symbol: {Stock.symbol}";
+                ResultData += $"\nName: {Stock.longName}";
+                ResultData += $"\nMaket Cap: {Stock.marketCap} - {Stock.currency}";
+            }
+            else {
+                ResultData = "Failed to fetch stock data";
+            }
         }
 
         public async Task FetchTrendingStocks() {
 
         }
-
 
     }
 }

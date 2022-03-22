@@ -161,6 +161,5 @@ namespace SharkSearch.Models {
         //"marketState": "PREPRE",
         public string symbol { get; set; }
         //"symbol": "F"
-
     }
 }

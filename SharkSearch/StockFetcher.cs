@@ -21,7 +21,8 @@ namespace SharkSearch {
                     return Stock;
                 }
                 else {
-                    throw new Exception(response.ReasonPhrase);
+                    //throw new Exception(response.ReasonPhrase);
+                    return null;
                 }
             }
         }
