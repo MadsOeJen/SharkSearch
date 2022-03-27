@@ -24,16 +24,17 @@ namespace SharkSearch.ViewModels {
             APIHelper.InitializeClient();
         }
         public async void Loaded() {
-            await FetchStock("TSLA");
+            await FetchStock("1810.HK");
+            await FetchTrendingStocks();
         }
 
         public async Task FetchStock(string StockSymbol) {
             StockModel Stock = await StockFetcher.FetchStock(StockSymbol);
             if(Stock != null) {
-                Console.WriteLine($"Symbol: {Stock.symbol}");
+                Console.WriteLine($"Region: {Stock.symbol}");
                 Console.WriteLine($"Name: {Stock.longName}");
                 Console.WriteLine($"Maket Cap: {Stock.marketCap} - {Stock.currency}");
-                ResultData = $"Symbol: {Stock.symbol}";
+                ResultData = $"Symbol: {Stock.region}";
                 ResultData += $"\nName: {Stock.longName}";
                 ResultData += $"\nMaket Cap: {Stock.marketCap} - {Stock.currency}";
             }
@@ -43,8 +44,16 @@ namespace SharkSearch.ViewModels {
         }
 
         public async Task FetchTrendingStocks() {
-
+            List<StockModel> Stocks = await StockFetcher.FetchTrendingStocks();
+            foreach(StockModel Stock in Stocks) {
+                ResultData += $"\n____________________________________________________________";
+                ResultData += $"\nSymbol: {Stock.symbol}";
+                ResultData += $"\nName: {Stock.longName}";
+                ResultData += $"\nMaket Cap: {Stock.marketCap} - {Stock.currency}";
+            }
         }
 
     }
 }
+
+

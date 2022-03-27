@@ -25,7 +25,7 @@ namespace SharkSearch {
 
         public static void InitializeClient() {
             APIClient = new HttpClient();
-            APIClient.BaseAddress = new Uri("https://yfapi.net/v6/finance/");
+            APIClient.BaseAddress = new Uri("https://yfapi.net/");
             APIClient.DefaultRequestHeaders.Accept.Clear();
             APIClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             APIClient.DefaultRequestHeaders.Add("X-API-KEY", APIKey0);
