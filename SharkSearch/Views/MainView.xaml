@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SharkSearch.Views" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:cal="http://caliburnmicro.com"
         mc:Ignorable="d"
-        Title="MainView" Height="450" Width="800" WindowState="Maximized" Background="#FF5555">
+        Title="MainView" Height="450" Width="800" WindowState="Maximized" Background="Black">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <cal:ActionMessage MethodName="Loaded"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Grid>
-        <TextBox Margin="50" Text="{Binding Path=ResultData}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <TextBox Margin="0" Text="{Binding Path=ResultData}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Transparent">
             
         </TextBox>
     </Grid>
