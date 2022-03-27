@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Caliburn.Micro;
 
 namespace SharkSearch.ViewModels {
     public class MainViewModel : Screen {
@@ -20,8 +21,11 @@ namespace SharkSearch.ViewModels {
             }
         }
 
+        public BindableCollection<StockModel> DisplayedStocks { get; set; }
+
         public MainViewModel() {
             APIHelper.InitializeClient();
+            DisplayedStocks = new BindableCollection<StockModel>();
         }
         public async void Loaded() {
             await FetchStock("1810.HK");
@@ -46,9 +50,10 @@ namespace SharkSearch.ViewModels {
         public async Task FetchTrendingStocks() {
             List<StockModel> Stocks = await StockFetcher.FetchTrendingStocks();
             foreach(StockModel Stock in Stocks) {
+                DisplayedStocks.Add(Stock);
                 ResultData += $"\n____________________________________________________________";
                 ResultData += $"\nSymbol: {Stock.symbol}";
-                ResultData += $"\nName: {Stock.longName}";
+                ResultData += $"\nName: {Stock.shortName}";
                 ResultData += $"\nMaket Cap: {Stock.marketCap} - {Stock.currency}";
             }
         }

@@ -5,15 +5,58 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SharkSearch.Views" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:cal="http://caliburnmicro.com"
         mc:Ignorable="d"
-        Title="MainView" Height="450" Width="800" WindowState="Maximized" Background="Black">
+        Title="MainView" Height="450" Width="800" WindowState="Maximized" Background="#23272A">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <cal:ActionMessage MethodName="Loaded"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Grid>
-        <TextBox Margin="0" Text="{Binding Path=ResultData}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Transparent">
-            
-        </TextBox>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Border Grid.Column="0" Grid.Row="0"  Grid.ColumnSpan="2" Background="#2C2F33">
+            <Border.Effect>
+                <DropShadowEffect Color="MidnightBlue" ShadowDepth="2"/>
+            </Border.Effect>
+        </Border>
+        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" Foreground="White" Text="LOGO GOES HERE"/>
+        <!--<TextBox IsReadOnly="True" Grid.Column="0" Grid.Row="1" Margin="10" Text="{Binding Path=ResultData}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White"/>-->
+        <Border Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+            <ItemsControl x:Name="DisplayedStocks">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Margin="15" Height="150" Width="300" Background="#2C2F33" CornerRadius="10">
+                            <Border.Effect>
+                                <DropShadowEffect Color="MidnightBlue" ShadowDepth="2"/>
+                            </Border.Effect>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Grid.Column="0" Foreground="LightSteelBlue" Margin="10" FontSize="12" Text="{Binding Path=shortName}"/>
+                                <Image Grid.Row="1" Grid.Column="0" Margin="10,0,0,0" Source="C:\Users\Mads Ørtoft Jensen\Pictures\StockChart.jpg" RenderOptions.BitmapScalingMode="HighQuality" Height="75"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Border>
     </Grid>
 </Window>
