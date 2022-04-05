@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -161,5 +162,152 @@ namespace SharkSearch.Models {
         //"marketState": "PREPRE",
         public string symbol { get; set; }
         //"symbol": "F"
+
+        public string Recommendation {
+            get { return RecommendAction().ToString(); }
+        }
+
+        public string IsMarketOpen {
+            get { 
+                if(tradeable == "False") {
+                    return "Closed";
+                }
+                else if (tradeable == "True") {
+                    return "Open";
+                }
+                else {
+                    return "Failed";
+                }
+            }
+        }
+
+        private enum Actions {
+            Buy,
+            Sell,
+            Hold
+        }
+
+        private Actions RecommendAction() {
+            double PriceToBook;
+            double EpsCurrentYear;
+            double EpsForward;
+            double FiftyTwoWeekLow;
+            double FiftyTwoWeekHigh;
+            double ForwardPE;
+            double RegularMarketDayLow;
+            double RegularMarketDayHigh;
+
+            try {
+                PriceToBook = double.Parse(priceToBook);
+                EpsCurrentYear = double.Parse(epsCurrentYear);
+                EpsForward = double.Parse(epsForward);
+                FiftyTwoWeekLow = double.Parse(fiftyTwoWeekLow);
+                FiftyTwoWeekHigh = double.Parse(fiftyTwoWeekHigh);
+                ForwardPE = double.Parse(forwardPE);
+                RegularMarketDayLow = double.Parse(regularMarketDayLow);
+                RegularMarketDayHigh = double.Parse(regularMarketDayHigh);
+            }
+            catch {
+                return Actions.Hold;
+            }
+
+
+            Actions ActionBook = Actions.Buy;
+
+            if (PriceToBook < 1) {
+
+                ActionBook = Actions.Buy;
+
+            }
+
+            else if (PriceToBook < 3) {
+
+                ActionBook = Actions.Hold;
+
+            }
+
+            else if (PriceToBook > 3) {
+
+                ActionBook = Actions.Sell;
+
+            }
+
+
+
+            Actions ActionPEG = Actions.Buy;
+
+            if (ForwardPE / ((1 - (EpsCurrentYear / EpsForward)) * 100) < 1) {
+
+                ActionPEG = Actions.Buy;
+
+            }
+
+            else if (ForwardPE / ((1 - (EpsCurrentYear / EpsForward)) * 100) < 2) {
+
+                ActionPEG = Actions.Hold;
+
+            }
+
+            else if (ForwardPE / ((1 - (EpsCurrentYear / EpsForward)) * 100) > 2) {
+
+                ActionPEG = Actions.Sell;
+
+            }
+
+
+
+            Actions ActionRSI = Actions.Buy;
+
+            if ((100 - ((100) / (1 + (FiftyTwoWeekLow / FiftyTwoWeekHigh) + (RegularMarketDayLow / RegularMarketDayHigh)))) < 50) {
+
+                ActionRSI = Actions.Buy;
+
+            }
+
+            else if ((100 - ((100) / (1 + (FiftyTwoWeekLow / FiftyTwoWeekHigh) + (RegularMarketDayLow / RegularMarketDayHigh)))) < 80) {
+
+                ActionRSI = Actions.Hold;
+
+            }
+
+            else if ((100 - ((100) / (1 + (FiftyTwoWeekLow / FiftyTwoWeekHigh) + (RegularMarketDayLow / RegularMarketDayHigh)))) > 80) {
+
+                ActionRSI = Actions.Sell;
+
+            }
+
+
+
+            if (ActionBook == ActionPEG || ActionPEG == ActionRSI || ActionRSI == ActionBook) {
+
+                if (ActionBook == ActionPEG) {
+
+                    return ActionBook;
+
+                }
+
+                else {
+
+                    return ActionRSI;
+
+                }
+
+            }
+
+            else {
+
+                return Actions.Hold;
+
+            }
+        }
+
+        public string yahooURL { get {
+                return @"https://finance.yahoo.com/quote/" + symbol;
+            }
+        }
+
+        public void YahooSearch() {
+            Process.Start(@"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", yahooURL);
+        }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SharkSearch.Views" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:cal="http://caliburnmicro.com"
         mc:Ignorable="d"
-        Title="MainView" Height="450" Width="800" WindowState="Maximized" Background="#23272A">
+        Title="SharkSearch" Height="450" Width="800" WindowState="Maximized" Background="#23272A">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <cal:ActionMessage MethodName="Loaded"/>
@@ -20,43 +20,111 @@
             <RowDefinition Height="100"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Border Grid.Column="0" Grid.Row="0"  Grid.ColumnSpan="2" Background="#2C2F33">
+        <Border Panel.ZIndex="2" Grid.Column="0" Grid.Row="0"  Grid.ColumnSpan="2" Background="#2C2F33">
             <Border.Effect>
                 <DropShadowEffect Color="MidnightBlue" ShadowDepth="2"/>
             </Border.Effect>
         </Border>
-        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" Foreground="White" Text="LOGO GOES HERE"/>
-        <!--<TextBox IsReadOnly="True" Grid.Column="0" Grid.Row="1" Margin="10" Text="{Binding Path=ResultData}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White"/>-->
-        <Border Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
-            <ItemsControl x:Name="DisplayedStocks">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Border Margin="15" Height="150" Width="300" Background="#2C2F33" CornerRadius="10">
-                            <Border.Effect>
-                                <DropShadowEffect Color="MidnightBlue" ShadowDepth="2"/>
-                            </Border.Effect>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Grid.Column="0" Foreground="LightSteelBlue" Margin="10" FontSize="12" Text="{Binding Path=shortName}"/>
-                                <Image Grid.Row="1" Grid.Column="0" Margin="10,0,0,0" Source="C:\Users\Mads Ørtoft Jensen\Pictures\StockChart.jpg" RenderOptions.BitmapScalingMode="HighQuality" Height="75"/>
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+        <Image RenderOptions.BitmapScalingMode="HighQuality" Panel.ZIndex="3" VerticalAlignment="Center" HorizontalAlignment="Center" Source="/Assets/SharkSearchLogo.png"/>
+        <Border Panel.ZIndex="1" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+            <ScrollViewer>
+                <ItemsControl x:Name="DisplayedStocks">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border VerticalAlignment="Center" HorizontalAlignment="Center" Margin="15" Height="150" Width="320" Background="#2C2F33" CornerRadius="10">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="MidnightBlue" ShadowDepth="2"/>
+                                </Border.Effect>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseDown">
+                                        <cal:ActionMessage MethodName="YahooSearch"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="10"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Viewbox HorizontalAlignment="Left" Width="130" Grid.Row="0" Grid.Column="0" Margin="10" StretchDirection="DownOnly">
+                                        <TextBlock Foreground="LightSteelBlue" TextWrapping="Wrap" Text="{Binding Path=shortName}"/>
+                                    </Viewbox>
+                                    <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="50,5,0,10" CornerRadius="5" BorderBrush="SteelBlue" BorderThickness="2" Height="27" Width="auto">
+                                        <TextBlock Margin="3" Foreground="LightSteelBlue" FontSize="12" Text="{Binding Path=quoteType}"/>
+                                    </Border>
+                                    <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,5,0,10" CornerRadius="5" BorderBrush="SteelBlue" BorderThickness="2" Height="27" Width="auto">
+                                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="LightSteelBlue" Margin="3" Text="{Binding Path=IsMarketOpen}"/>
+                                    </Border>
+                                    <Image HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" Margin="10,0,0,0" Source="C:\Users\Mads Ørtoft Jensen\Pictures\StockChart.jpg" RenderOptions.BitmapScalingMode="HighQuality" Height="75"/>
+                                    <Border Grid.Row="1" Grid.Column="1" BorderBrush="LightSteelBlue" BorderThickness="1" CornerRadius="5">
+                                        <Grid Margin="2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Grid.Row="1" Grid.Column="1" FontSize="9" Foreground="LightSteelBlue" Text="Price"/>
+                                            <TextBlock Grid.Row="1" Grid.Column="3" FontSize="9" Foreground="LightSteelBlue" Text="{Binding Path=regularMarketPrice}"/>
+                                            <TextBlock Grid.Row="1" Grid.Column="5" FontSize="9" Foreground="LightSteelBlue" Text="{Binding Path=currency}"/>
+
+                                            <Rectangle Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="5" Height="1" Stroke="SteelBlue" StrokeThickness="1"/>
+                                            <Rectangle Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="5" Height="1" Stroke="SteelBlue" StrokeThickness="1"/>
+
+                                            <TextBlock Grid.Row="3" Grid.Column="1" FontSize="9" Foreground="LightSteelBlue" Text="Change"/>
+                                            <TextBlock Grid.Row="3" Grid.Column="3" FontSize="9" Foreground="LightSteelBlue" Text="{Binding Path=regularMarketChangePercent}"/>
+                                            <TextBlock Grid.Row="3" Grid.Column="5" FontSize="9" Foreground="LightSteelBlue" Text="%"/>
+
+                                            <TextBlock Grid.Row="5" Grid.Column="1" FontSize="9" Foreground="LightSteelBlue" Text="Ask: " TextWrapping="Wrap" Width="50"/>
+                                            <TextBlock Grid.Row="5" Grid.Column="3" FontSize="9" Foreground="LightSteelBlue" VerticalAlignment="Center" Text="{Binding Path=ask}"/>
+                                            <TextBlock Grid.Row="5" Grid.Column="5" FontSize="9" Foreground="LightSteelBlue" Text="{Binding Path=currency}"/>
+
+                                        </Grid>
+                                    </Border>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="0">
+                                        <TextBlock Text="AnalystRec:  " Foreground="LightSteelBlue"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <!--<TextBlock Text="3.4" VerticalAlignment="Center" FontWeight="Bold" Foreground="#00FF00"/>-->
+                                            <Image Margin="2" Height="12" HorizontalAlignment="center" Source="C:\Users\Mads Ørtoft Jensen\Pictures\green arrow.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                        </StackPanel>
+                                        <TextBlock Text="{Binding Path=averageAnalystRating}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Foreground="#00FF00"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1">
+                                        <TextBlock Text="SharkRec:  " Foreground="LightSteelBlue"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <!--<TextBlock Text="2,9" VerticalAlignment="Center" FontWeight="Bold" Foreground="#00FF00"/>-->
+                                            <Image Margin="2" Height="12" HorizontalAlignment="center" Source="C:\Users\Mads Ørtoft Jensen\Pictures\green arrow.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                        </StackPanel>
+                                        <TextBlock Text="{Binding Path=Recommendation}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Foreground="#00FF00"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
         </Border>
     </Grid>
 </Window>
