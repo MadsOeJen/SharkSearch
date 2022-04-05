@@ -9,6 +9,7 @@
                     <local:Bootstrapper x:Key="Bootstrapper"/>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
+            <BitmapImage x:Key="Logo" UriSource="../Assets/SharkSearch_-_Logo-removebg-preview.png"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

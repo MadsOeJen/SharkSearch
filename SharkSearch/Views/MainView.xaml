@@ -25,7 +25,8 @@
                 <DropShadowEffect Color="MidnightBlue" ShadowDepth="2"/>
             </Border.Effect>
         </Border>
-        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" Foreground="White" Text="LOGO GOES HERE"/>
+        <!--<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" Foreground="White" Text="LOGO GOES HERE"/>-->
+        <Image Source="{StaticResource Logo}"/>
         <!--<TextBox IsReadOnly="True" Grid.Column="0" Grid.Row="1" Margin="10" Text="{Binding Path=ResultData}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White"/>-->
         <Border Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
             <ItemsControl x:Name="DisplayedStocks">
