@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SharkSearch.Views" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:cal="http://caliburnmicro.com"
         mc:Ignorable="d"
-        Title="MainView" Height="450" Width="800" WindowState="Maximized" Background="#23272A">
+        Title="SharkSearch" Height="450" Width="800" WindowState="Maximized" Background="#23272A">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <cal:ActionMessage MethodName="Loaded"/>
@@ -20,13 +20,12 @@
             <RowDefinition Height="100"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Border Grid.Column="0" Grid.Row="0"  Grid.ColumnSpan="2" Background="#2C2F33">
+        <Border Panel.ZIndex="2" Grid.Column="0" Grid.Row="0"  Grid.ColumnSpan="2" Background="#2C2F33">
             <Border.Effect>
                 <DropShadowEffect Color="MidnightBlue" ShadowDepth="2"/>
             </Border.Effect>
         </Border>
-        <!--<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" Foreground="White" Text="LOGO GOES HERE"/>-->
-        <Image Source="{StaticResource Logo}"/>
+        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" Foreground="White" Text="LOGO GOES HERE"/>
         <!--<TextBox IsReadOnly="True" Grid.Column="0" Grid.Row="1" Margin="10" Text="{Binding Path=ResultData}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White"/>-->
         <Border Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
             <ItemsControl x:Name="DisplayedStocks">

@@ -53,6 +53,7 @@ namespace SharkSearch.ViewModels {
                 DisplayedStocks.Add(Stock);
                 ResultData += $"\n____________________________________________________________";
                 ResultData += $"\nSymbol: {Stock.symbol}";
+                ResultData += $"\nSymbol: {Stock.quoteType}";
                 ResultData += $"\nName: {Stock.shortName}";
                 ResultData += $"\nMaket Cap: {Stock.marketCap} - {Stock.currency}";
             }
