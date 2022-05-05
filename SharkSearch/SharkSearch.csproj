@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <None Remove="Assets\SharkSearchLogo.png" />
+    <None Remove="Assets\StockChart.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,6 +20,7 @@
 
   <ItemGroup>
     <Resource Include="Assets\SharkSearchLogo.png" />
+    <Resource Include="Assets\StockChart.jpg" />
   </ItemGroup>
 
 </Project>

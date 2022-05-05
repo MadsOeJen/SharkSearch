@@ -13,52 +13,109 @@ namespace SharkSearch {
 
 
         /******************   Fetch one specific stock   ********************/
-        public static async Task<StockModel> FetchStock(string StockSymbol) {
+        public static async Task<StockModel?> FetchStock(string StockSymbol) {
 
-            using (HttpResponseMessage response = await APIHelper.APIClient.GetAsync($"v6/finance/quote?region=US&lang=en&symbols={StockSymbol}")) {
-                if (response.IsSuccessStatusCode) {
-                    string StockResult = await response.Content.ReadAsStringAsync();
-                    StockModel Stock = await DeserializeStockData(StockResult);
-                    return Stock;
-                }
-                else {
-                    //throw new Exception(response.ReasonPhrase);
-                    return null;
+            //using (HttpResponseMessage response = await APIHelper.APIClient.GetAsync($"v6/finance/quote?region=US&lang=en&symbols={StockSymbol}")) {
+            //    //if (response.IsSuccessStatusCode) {
+            //    //    string StockResult = await response.Content.ReadAsStringAsync();
+            //    //    StockModel Stock = await DeserializeStockData(StockResult);
+            //    //    return Stock;
+            //    //}
+            //    //else {
+            //    //    //throw new Exception(response.ReasonPhrase);
+            //    //    return null;
+            //    //}
+
+            //    while (!response.IsSuccessStatusCode) {
+            //        APIHelper.ChangeKey();
+            //    }
+            //    string StockResult = await response.Content.ReadAsStringAsync();
+            //    StockModel Stock = await DeserializeStockData(StockResult);
+            //    return Stock;
+            //}
+
+
+            int UsedKeys = 0;
+            bool successful = false;
+            while (!successful && UsedKeys <= APIHelper.GetNumberOfKeys()) {
+                using (HttpResponseMessage response = await APIHelper.APIClient.GetAsync($"v6/finance/quote?region=US&lang=en&symbols={StockSymbol}")) {
+                    if (response.IsSuccessStatusCode) {
+                        string StockResult = await response.Content.ReadAsStringAsync();
+                        StockModel Stock = await DeserializeStockData(StockResult);
+                        successful = true;
+                        return Stock;
+                    }
+                    else {
+                        APIHelper.ChangeKey();
+                        UsedKeys++;
+                    }
                 }
             }
+            return null;
         }
 
 
         /******************   Fetch all trending stocks   ********************/
         public static async Task<List<StockModel>> FetchTrendingStocks() {
             string trendingStocks = await GetTrendingStockSymbols();
-            using (HttpResponseMessage response = await APIHelper.APIClient.GetAsync($"v6/finance/quote?region=US&lang=en&symbols={trendingStocks}")) {
-                if (response.IsSuccessStatusCode) {
-                    string StockResult = await response.Content.ReadAsStringAsync();
-                    List<StockModel> Stocks = await DeserializeStocks(StockResult);
-                    return Stocks;
-                }
-                else {
-                    //throw new Exception(response.ReasonPhrase);
-                    return null;
+            int UsedKeys = 0;
+            bool successful = false;
+            while (!successful && UsedKeys <= APIHelper.GetNumberOfKeys()) {
+                using (HttpResponseMessage response = await APIHelper.APIClient.GetAsync($"v6/finance/quote?region=US&lang=en&symbols={trendingStocks}")) {
+                    if (response.IsSuccessStatusCode) {
+                        string StockResult = await response.Content.ReadAsStringAsync();
+                        List<StockModel> Stocks = await DeserializeStocks(StockResult);
+                        successful = true;
+                        return Stocks;
+                    }
+                    else {
+                        APIHelper.ChangeKey();
+                        UsedKeys++;
+                    }
                 }
             }
+            return null;
         }
 
 
         /******************   Get symbols of top 20 trending stocks   ********************/
         public static async Task<string> GetTrendingStockSymbols() {
-            using (HttpResponseMessage response = await APIHelper.APIClient.GetAsync($"v1/finance/trending/US")) {
-                if (response.IsSuccessStatusCode) {
-                    string CallResult = await response.Content.ReadAsStringAsync();
-                    string Symbols = await DeserializeTrendingStockData(CallResult);
-                    return Symbols;
-                }
-                else {
-                    //throw new Exception(response.ReasonPhrase);
-                    return null;
+            //using (HttpResponseMessage response = await APIHelper.APIClient.GetAsync($"v1/finance/trending/US")) {
+            //    if (response.IsSuccessStatusCode) {
+            //        string CallResult = await response.Content.ReadAsStringAsync();
+            //        string Symbols = await DeserializeTrendingStockData(CallResult);
+            //        return Symbols;
+            //    }
+            //    else {
+            //        //throw new Exception(response.ReasonPhrase);
+            //        return null;
+            //    }
+            //    while (!response.IsSuccessStatusCode) {
+            //        APIHelper.ChangeKey();
+            //    }
+            //    string CallResult = await response.Content.ReadAsStringAsync();
+            //    string Symbols = await DeserializeTrendingStockData(CallResult);
+            //    return Symbols;
+            //}
+
+
+            int UsedKeys = 0;
+            bool successful = false;
+            while (!successful && UsedKeys <= APIHelper.GetNumberOfKeys()) {
+                using (HttpResponseMessage response = await APIHelper.APIClient.GetAsync($"v1/finance/trending/US")) {
+                    if (response.IsSuccessStatusCode) {
+                        string CallResult = await response.Content.ReadAsStringAsync();
+                        string Symbols = await DeserializeTrendingStockData(CallResult);
+                        successful = true;
+                        return Symbols;
+                    }
+                    else {
+                        APIHelper.ChangeKey();
+                        UsedKeys++;
+                    }
                 }
             }
+            return null;
         }
 
 

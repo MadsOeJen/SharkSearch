@@ -11,24 +11,55 @@ namespace SharkSearch {
 
         public static HttpClient APIClient { get; set; }
 
+        private static int keyIndex = 0;
+
         /************* Excel keys **********************/
-        private static string APIKey0 = "uI94RpW8yQ7SLvVYM52UL8l5MDVsoWFjNvOxqu2a"; //Seward
-        private static string APIKey1 = "CSS8f5uRAn3nfXet1RjWvIZzzxurkGq2gRnYdbXg"; //bepite
-        private static string APIKey2 = "zVAsGhOMJA7IDhGoShHNR9pUDWzd1pZI53Xq7XE5";
-        private static string APIKey3 = "li3pi3d5AT7LkbsQm8TCNaFcjUx9sMak22dWmp7f";
-        private static string APIKey4 = "bFwo3UbXA88mocccmTIvrads7yrcP9CE8aWCpse6";
-        private static string APIKey5 = "4DYHOpGxFE7A1UYYUGzQJG0EapDMfXQ69VC5Jb4c";
+        private static string APIKey0 = "uI94RpW8yQ7SLvVYM52UL8l5MDVsoWFjNvOxqu2a"; //Seward //
+        private static string APIKey1 = "ZgyimbzcwJ8Dz60sZrcgg82zWqQm1s08aOlbRzXg"; //bepite //
+        private static string APIKey2 = "wjCjsStviFaaJ8ZRi2VAS15QDbtKpefI4L7rbZxS"; //nadoner //
+        private static string APIKey3 = "TJ2z7TRZzz7ra9eoJnF4f7b583VnmNh8OxXnyjfg"; //maxfield //
+        private static string APIKey4 = "0WlPUPEuCH2dqXVot5V1N8YZeTsACauY4hDxHv9W"; //kreis //
+        private static string APIKey5 = "G2ZRvaxcRt5bToLYxzBegaGvG4VknEG6dlQN5vUh"; //bimafa //
 
-        /************* Private keys **********************/
-        private static string APIKey6 = "ohNOimyQoLoWc2kAb7908Pxiwo1iVXm55skxxqM2"; //mads@wtcon
 
+        private static List<string> ApiKeys = new List<string>() {
+            "uI94RpW8yQ7SLvVYM52UL8l5MDVsoWFjNvOxqu2a",
+            "ZgyimbzcwJ8Dz60sZrcgg82zWqQm1s08aOlbRzXg",
+            "wjCjsStviFaaJ8ZRi2VAS15QDbtKpefI4L7rbZxS",
+            "TJ2z7TRZzz7ra9eoJnF4f7b583VnmNh8OxXnyjfg",
+            "0WlPUPEuCH2dqXVot5V1N8YZeTsACauY4hDxHv9W",
+            "G2ZRvaxcRt5bToLYxzBegaGvG4VknEG6dlQN5vUh"
+        };
+
+        public static int GetNumberOfKeys() {
+            return ApiKeys.Count;
+        }
 
         public static void InitializeClient() {
             APIClient = new HttpClient();
             APIClient.BaseAddress = new Uri("https://yfapi.net/");
             APIClient.DefaultRequestHeaders.Accept.Clear();
             APIClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            APIClient.DefaultRequestHeaders.Add("X-API-KEY", APIKey6);
+            APIClient.DefaultRequestHeaders.Add("X-API-KEY", GetNewKey());
+        }
+
+        public static void ChangeKey() {
+            APIClient = new HttpClient();
+            APIClient.BaseAddress = new Uri("https://yfapi.net/");
+            APIClient.DefaultRequestHeaders.Accept.Clear();
+            APIClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            APIClient.DefaultRequestHeaders.Add("X-API-KEY", GetNewKey());
+        }
+
+        private static string GetNewKey() {
+            if(keyIndex < ApiKeys.Count) {
+                keyIndex++;
+                return ApiKeys[keyIndex - 1];
+            }
+            else {
+                keyIndex = 0;
+                return ApiKeys[keyIndex];
+            }
         }
     }
 }
