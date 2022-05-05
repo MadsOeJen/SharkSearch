@@ -27,7 +27,7 @@
         </Border>
         <Image RenderOptions.BitmapScalingMode="HighQuality" Panel.ZIndex="3" VerticalAlignment="Center" HorizontalAlignment="Center" Source="/Assets/SharkSearchLogo.png"/>
         <Border Panel.ZIndex="1" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
-            <ScrollViewer>
+            <ScrollViewer VerticalScrollBarVisibility="Hidden">
                 <ItemsControl x:Name="DisplayedStocks">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
