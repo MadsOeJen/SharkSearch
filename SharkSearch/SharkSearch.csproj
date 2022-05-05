@@ -8,6 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\greenArrow.png" />
+    <None Remove="Assets\redArrow.png" />
     <None Remove="Assets\SharkSearchLogo.png" />
     <None Remove="Assets\StockChart.jpg" />
   </ItemGroup>
@@ -19,6 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\greenArrow.png" />
+    <Resource Include="Assets\redArrow.png" />
     <Resource Include="Assets\SharkSearchLogo.png" />
     <Resource Include="Assets\StockChart.jpg" />
   </ItemGroup>

@@ -14,34 +14,13 @@ namespace SharkSearch {
 
         /******************   Fetch one specific stock   ********************/
         public static async Task<StockModel?> FetchStock(string StockSymbol) {
-
-            //using (HttpResponseMessage response = await APIHelper.APIClient.GetAsync($"v6/finance/quote?region=US&lang=en&symbols={StockSymbol}")) {
-            //    //if (response.IsSuccessStatusCode) {
-            //    //    string StockResult = await response.Content.ReadAsStringAsync();
-            //    //    StockModel Stock = await DeserializeStockData(StockResult);
-            //    //    return Stock;
-            //    //}
-            //    //else {
-            //    //    //throw new Exception(response.ReasonPhrase);
-            //    //    return null;
-            //    //}
-
-            //    while (!response.IsSuccessStatusCode) {
-            //        APIHelper.ChangeKey();
-            //    }
-            //    string StockResult = await response.Content.ReadAsStringAsync();
-            //    StockModel Stock = await DeserializeStockData(StockResult);
-            //    return Stock;
-            //}
-
-
             int UsedKeys = 0;
             bool successful = false;
             while (!successful && UsedKeys <= APIHelper.GetNumberOfKeys()) {
                 using (HttpResponseMessage response = await APIHelper.APIClient.GetAsync($"v6/finance/quote?region=US&lang=en&symbols={StockSymbol}")) {
                     if (response.IsSuccessStatusCode) {
                         string StockResult = await response.Content.ReadAsStringAsync();
-                        StockModel Stock = await DeserializeStockData(StockResult);
+                        StockModel Stock = DeserializeStockData(StockResult);
                         successful = true;
                         return Stock;
                     }
@@ -56,7 +35,7 @@ namespace SharkSearch {
 
 
         /******************   Fetch all trending stocks   ********************/
-        public static async Task<List<StockModel>> FetchTrendingStocks() {
+        public static async Task<List<StockModel>?> FetchTrendingStocks() {
             string trendingStocks = await GetTrendingStockSymbols();
             int UsedKeys = 0;
             bool successful = false;
@@ -64,7 +43,7 @@ namespace SharkSearch {
                 using (HttpResponseMessage response = await APIHelper.APIClient.GetAsync($"v6/finance/quote?region=US&lang=en&symbols={trendingStocks}")) {
                     if (response.IsSuccessStatusCode) {
                         string StockResult = await response.Content.ReadAsStringAsync();
-                        List<StockModel> Stocks = await DeserializeStocks(StockResult);
+                        List<StockModel> Stocks = DeserializeStocks(StockResult);
                         successful = true;
                         return Stocks;
                     }
@@ -79,33 +58,14 @@ namespace SharkSearch {
 
 
         /******************   Get symbols of top 20 trending stocks   ********************/
-        public static async Task<string> GetTrendingStockSymbols() {
-            //using (HttpResponseMessage response = await APIHelper.APIClient.GetAsync($"v1/finance/trending/US")) {
-            //    if (response.IsSuccessStatusCode) {
-            //        string CallResult = await response.Content.ReadAsStringAsync();
-            //        string Symbols = await DeserializeTrendingStockData(CallResult);
-            //        return Symbols;
-            //    }
-            //    else {
-            //        //throw new Exception(response.ReasonPhrase);
-            //        return null;
-            //    }
-            //    while (!response.IsSuccessStatusCode) {
-            //        APIHelper.ChangeKey();
-            //    }
-            //    string CallResult = await response.Content.ReadAsStringAsync();
-            //    string Symbols = await DeserializeTrendingStockData(CallResult);
-            //    return Symbols;
-            //}
-
-
+        public static async Task<string?> GetTrendingStockSymbols() {
             int UsedKeys = 0;
             bool successful = false;
             while (!successful && UsedKeys <= APIHelper.GetNumberOfKeys()) {
                 using (HttpResponseMessage response = await APIHelper.APIClient.GetAsync($"v1/finance/trending/US")) {
                     if (response.IsSuccessStatusCode) {
                         string CallResult = await response.Content.ReadAsStringAsync();
-                        string Symbols = await DeserializeTrendingStockData(CallResult);
+                        string Symbols = DeserializeTrendingStockData(CallResult);
                         successful = true;
                         return Symbols;
                     }
@@ -121,7 +81,7 @@ namespace SharkSearch {
 
 
         /******************   Deserialize data for one stock   ********************/
-        private static async Task<StockModel> DeserializeStockData(string stockData) {
+        private static StockModel DeserializeStockData(string stockData) {
 
             JObject StockDataObject = JObject.Parse(stockData);
 
@@ -140,7 +100,7 @@ namespace SharkSearch {
 
 
         /******************   Deserialize data for multiple stocks   ********************/
-        private static async Task<List<StockModel>> DeserializeStocks(string stockData) {
+        private static List<StockModel> DeserializeStocks(string stockData) {
 
             JObject StockDataObject = JObject.Parse(stockData);
 
@@ -159,7 +119,7 @@ namespace SharkSearch {
 
 
         /******************   Deserialize data for trending stocks   ********************/
-        private static async Task<string> DeserializeTrendingStockData(string CallResult) {
+        private static string DeserializeTrendingStockData(string CallResult) {
 
             string CommaSeperatedSymbols = "";
 
@@ -176,8 +136,6 @@ namespace SharkSearch {
 
             return CommaSeperatedSymbols;
         }
-
-
 
 
     }

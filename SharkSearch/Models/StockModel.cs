@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace SharkSearch.Models {
     public class StockModel {
@@ -163,6 +164,77 @@ namespace SharkSearch.Models {
         public string symbol { get; set; }
         //"symbol": "F"
 
+        public string ImagePathShark { 
+            get {
+                if(Recommendation == Actions.Buy.ToString()) {
+                    return @"/Assets/greenArrow.png";
+                }
+                else if (Recommendation == Actions.Sell.ToString()) {
+                    return @"/Assets/redArrow.png";
+                }
+                else {
+                    return @"";
+                }
+            }
+        }
+
+        public string ImagePathAnalyst {
+            get {
+                if(averageAnalystRating != null) {
+                    if (averageAnalystRating.Contains("Buy")) {
+                        return @"/Assets/greenArrow.png";
+                    }
+                    else if (averageAnalystRating.Contains("Sell")) {
+                        return @"/Assets/redArrow.png";
+                    }
+                    else {
+                        return @"";
+                    }
+                }
+                else {
+                    return @"";
+                }
+            }
+        }
+
+
+        public Brush SharkRecColor {
+            get {
+                if (Recommendation == Actions.Buy.ToString()) {
+                    return (Brush)new BrushConverter().ConvertFrom("#00FF00");
+                }
+                else if (Recommendation == Actions.Sell.ToString()) {
+                    return Brushes.Red;
+                }
+                else {
+                    return Brushes.Yellow;
+                }
+            }
+        }
+
+        public Brush AnalystRecColor {
+            get {
+                if (averageAnalystRating != null) {
+                    if (averageAnalystRating.Contains("Buy")) {
+                        return (Brush)new BrushConverter().ConvertFrom("#00FF00");
+                    }
+                    else if (averageAnalystRating.Contains("Sell")) {
+                        return Brushes.Red;
+                    }
+                    else if (averageAnalystRating.Contains("Hold")) {
+                        return Brushes.Yellow;
+                    }
+                    else {
+                        return null;
+                    }
+                }
+                else {
+                    return null;
+                }
+            }
+        }
+
+
         public string Recommendation {
             get { return RecommendAction().ToString(); }
         }
@@ -309,5 +381,6 @@ namespace SharkSearch.Models {
         public void YahooSearch() {
             Process.Start(@"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", yahooURL);
         }
+
     }
 }

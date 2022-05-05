@@ -106,18 +106,16 @@
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="0">
                                         <TextBlock Text="AnalystRec:  " Foreground="LightSteelBlue"/>
                                         <StackPanel Orientation="Horizontal">
-                                            <!--<TextBlock Text="3.4" VerticalAlignment="Center" FontWeight="Bold" Foreground="#00FF00"/>-->
-                                            <Image Margin="2" Height="12" HorizontalAlignment="center" Source="C:\Users\Mads Ørtoft Jensen\Pictures\green arrow.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                            <Image Margin="2" Height="12" HorizontalAlignment="center" Source="{Binding Path=ImagePathAnalyst}" RenderOptions.BitmapScalingMode="HighQuality"/>
                                         </StackPanel>
-                                        <TextBlock Text="{Binding Path=averageAnalystRating}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Foreground="#00FF00"/>
+                                        <TextBlock Text="{Binding Path=averageAnalystRating}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Foreground="{Binding Path=AnalystRecColor}"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1">
                                         <TextBlock Text="SharkRec:  " Foreground="LightSteelBlue"/>
                                         <StackPanel Orientation="Horizontal">
-                                            <!--<TextBlock Text="2,9" VerticalAlignment="Center" FontWeight="Bold" Foreground="#00FF00"/>-->
-                                            <Image Margin="2" Height="12" HorizontalAlignment="center" Source="C:\Users\Mads Ørtoft Jensen\Pictures\green arrow.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                            <Image Margin="2" Height="12" HorizontalAlignment="center" Source="{Binding Path=ImagePathShark}" RenderOptions.BitmapScalingMode="HighQuality"/>
                                         </StackPanel>
-                                        <TextBlock Text="{Binding Path=Recommendation}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Foreground="#00FF00"/>
+                                        <TextBlock Text="{Binding Path=Recommendation}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Foreground="{Binding Path=SharkRecColor}"/>
                                     </StackPanel>
                                 </Grid>
                             </Border>
