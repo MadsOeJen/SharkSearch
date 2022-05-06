@@ -211,21 +211,24 @@ namespace SharkSearch.Models {
                 return Actions.Hold;
             }
 
-
+            //ActionBook is set to Buy
             Actions ActionBook = Actions.Buy;
 
+            //If PriceToBook is lower than one, then ActionBook is set to buy
             if (PriceToBook < 1) {
 
                 ActionBook = Actions.Buy;
 
             }
 
+            //If PriceToBook is lower than three, then ActionBook is set to Hold
             else if (PriceToBook < 3) {
 
                 ActionBook = Actions.Hold;
 
             }
 
+            //If PriceToBook is higher than three, then ActionBook is set to Sell
             else if (PriceToBook > 3) {
 
                 ActionBook = Actions.Sell;
@@ -233,21 +236,24 @@ namespace SharkSearch.Models {
             }
 
 
-
+            //ActionPEG is set to Buy
             Actions ActionPEG = Actions.Buy;
 
+            //If Calculated PEG ratio is lower than one, then ActionPEG is set to Buy
             if (ForwardPE / ((1 - (EpsCurrentYear / EpsForward)) * 100) < 1) {
 
                 ActionPEG = Actions.Buy;
 
             }
 
+            //If Calculated PEG ratio is lower than two, then ActionPEG is set to Hold
             else if (ForwardPE / ((1 - (EpsCurrentYear / EpsForward)) * 100) < 2) {
 
                 ActionPEG = Actions.Hold;
 
             }
 
+            //If Calculated PEG ratio is higher than two, then ActionPEG is set to Sell
             else if (ForwardPE / ((1 - (EpsCurrentYear / EpsForward)) * 100) > 2) {
 
                 ActionPEG = Actions.Sell;
@@ -255,21 +261,24 @@ namespace SharkSearch.Models {
             }
 
 
-
+            //ActionRSI is set to Buy
             Actions ActionRSI = Actions.Buy;
 
+            //If Calculated RSI is lower than fifty, then ActionRSI is set to Buy
             if ((100 - ((100) / (1 + (FiftyTwoWeekLow / FiftyTwoWeekHigh) + (RegularMarketDayLow / RegularMarketDayHigh)))) < 50) {
 
                 ActionRSI = Actions.Buy;
 
             }
 
+            //If Calculated RSI is lower than eighty, then ActionRSI is set to Hold
             else if ((100 - ((100) / (1 + (FiftyTwoWeekLow / FiftyTwoWeekHigh) + (RegularMarketDayLow / RegularMarketDayHigh)))) < 80) {
 
                 ActionRSI = Actions.Hold;
 
             }
 
+            //If Calculated RSI is higher than eighty, then ActionRSI is set to Sell
             else if ((100 - ((100) / (1 + (FiftyTwoWeekLow / FiftyTwoWeekHigh) + (RegularMarketDayLow / RegularMarketDayHigh)))) > 80) {
 
                 ActionRSI = Actions.Sell;
@@ -277,7 +286,7 @@ namespace SharkSearch.Models {
             }
 
 
-
+            // If any of the parameter are the same, it will return either ActionBook or ActionRSI
             if (ActionBook == ActionPEG || ActionPEG == ActionRSI || ActionRSI == ActionBook) {
 
                 if (ActionBook == ActionPEG) {
@@ -293,7 +302,7 @@ namespace SharkSearch.Models {
                 }
 
             }
-
+            //If none of parameters are the same, it will return Hold
             else {
 
                 return Actions.Hold;
